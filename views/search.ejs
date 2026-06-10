@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search — CryptoView</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-brand">Crypto<span>View</span></a>
+        <form class="nav-search" action="/search" method="GET">
+            <input name="coin" type="text" placeholder="Search for a coin…">
+            <button type="submit">Search</button>
+        </form>
+    </nav>
+
+    <div class="search-page">
+        <h2 class="search-page-title">Search Results</h2>
+        <table class="search-table">
+            <thead>
+                <tr>
+                    <th>Icon</th>
+                    <th>Name</th>
+                    <th>Symbol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% coins.forEach(coin => { %>
+                <tr>
+                    <td><img src="<%= coin.thumb %>" alt="<%= coin.name %>" class="coin-thumb"></td>
+                    <td><a href="/coins/<%= coin.id %>"><%= coin.name %></a></td>
+                    <td><span class="symbol-badge"><%= coin.symbol %></span></td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

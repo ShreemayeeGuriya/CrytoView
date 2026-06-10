@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoView</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-brand">Crypto<span>View</span></a>
+        <form class="nav-search" action="/search" method="GET">
+            <input name="coin" type="text" placeholder="Search for a coin…">
+            <button type="submit">Search</button>
+        </form>
+    </nav>
+
+    <div class="home-layout">
+        <div class="main-content">
+            <h2 class="section-title">Top Coins by Market Cap</h2>
+            <table class="coins-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Price (USD)</th>
+                        <th>24h Change</th>
+                        <th>Market Cap</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% coins.forEach(coin => { %>
+                    <tr onclick="window.location='/coins/<%= coin.id %>'">
+                        <td><span class="rank-badge"><%= coin.market_cap_rank %></span></td>
+                        <td>
+                            <div class="coin-name-cell">
+                                <span class="coin-name"><%= coin.name %></span>
+                                <span class="coin-symbol"><%= coin.symbol.toUpperCase() %></span>
+                            </div>
+                        </td>
+                        <td>$<%= coin.current_price.toLocaleString() %></td>
+                        <td>
+                            <% if (coin.price_change_percentage_24h !== null) { %>
+                                <span class="<%= coin.price_change_percentage_24h >= 0 ? 'gain' : 'loss' %>">
+                                    <%= coin.price_change_percentage_24h >= 0 ? '▲' : '▼' %>
+                                    <%= Math.abs(coin.price_change_percentage_24h).toFixed(2) %>%
+                                </span>
+                            <% } else { %>
+                                <span style="color: var(--text-muted)">N/A</span>
+                            <% } %>
+                        </td>
+                        <td>$<%= coin.market_cap.toLocaleString() %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-panel">
+                <div class="sidebar-label">Global Market</div>
+                <div class="global-stat">
+                    <span class="global-stat-value">$<%= (marketData.total_market_cap.usd / 1e12).toFixed(2) %>T</span>
+                    <span class="global-stat-label">Total Market Cap</span>
+                </div>
+                <div class="global-stat">
+                    <span class="global-stat-value <%= marketData.market_cap_change_percentage_24h_usd >= 0 ? 'gain' : 'loss' %>">
+                        <%= marketData.market_cap_change_percentage_24h_usd >= 0 ? '▲' : '▼' %>
+                        <%= Math.abs(marketData.market_cap_change_percentage_24h_usd).toFixed(2) %>%
+                    </span>
+                    <span class="global-stat-label">24h Change</span>
+                </div>
+            </div>
+
+            <div class="sidebar-panel">
+                <div class="sidebar-label">Top Gainers</div>
+                <table class="mini-table">
+                    <thead>
+                        <tr><th>Coin</th><th>24h</th></tr>
+                    </thead>
+                    <tbody>
+                        <% topGainers.forEach(coin => { %>
+                        <tr>
+                            <td><%= coin.name %></td>
+                            <td class="gain">▲ <%= coin.price_change_percentage_24h.toFixed(2) %>%</td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="sidebar-panel">
+                <div class="sidebar-label">Top Losers</div>
+                <table class="mini-table">
+                    <thead>
+                        <tr><th>Coin</th><th>24h</th></tr>
+                    </thead>
+                    <tbody>
+                        <% topLosers.forEach(coin => { %>
+                        <tr>
+                            <td><%= coin.name %></td>
+                            <td class="loss">▼ <%= Math.abs(coin.price_change_percentage_24h).toFixed(2) %>%</td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
