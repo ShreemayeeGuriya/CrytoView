@@ -3,7 +3,8 @@
 A full-stack cryptocurrency market dashboard built with Node.js, Express, and EJS. Fetches live data from the CoinGecko API to display real-time market information including coin prices, global market stats, top gainers/losers, search functionality, and individual coin detail pages.
 
 ---
-
+## Live Demo 
+     https://crytoview-production.up.railway.app/
 ## Features
 
 - **Live Coins Table** — Top coins ranked by market cap with price, 24h change, and market cap
