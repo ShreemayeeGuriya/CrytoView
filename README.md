@@ -4,7 +4,7 @@ A full-stack cryptocurrency market dashboard built with Node.js, Express, and EJ
 
 ---
 ## Live Demo 
-    <https://cryptoview-production.up.railway.app/>
+<https://cryptoview-production.up.railway.app/>
 ## Features
 
 - **Live Coins Table** — Top coins ranked by market cap with price, 24h change, and market cap
